@@ -2,22 +2,22 @@ let environment = flock.init();
 let playing = false
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    let synth = flock.synth({
-        synthDef: {
-            ugen: "flock.ugen.sin",
-            freq: 440,
-        }
-    });
     
-    let playSynth = () => {
-        environment.start();
+    environment.start()
+
+    let playSynth = (val) => {
+        
+        let synth = flock.synth({
+            synthDef: {
+                ugen: "flock.ugen.sin",
+                freq: val,
+            }
+        });
+
         playing ? synth.pause() : synth.play()
         playing = !playing
     }
     
-    
-    let play = document.querySelector(".play")
-    play.addEventListener('click', playSynth)
+    document.addEventListener('click', (e) => playSynth(e.offsetY))
 
 })
